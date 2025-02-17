@@ -1,0 +1,47 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px;
+    z-index: 999;
+    background-color: transparent;
+  }
+  
+  .header-container {
+    display: flex;
+    position: relative;
+  }
+  
+  .header-title {
+    position: absolute;
+    right: 5%;
+    top: 20%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  
+  .header-title span {
+    color: white;
+    font-weight: 300;
+    font-size: 15px;
+  }
+  
+  .header-profile {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    border: 2px solid white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .header-profile-icon {
+    color: white;
+    font-size: 14px;
+  }
