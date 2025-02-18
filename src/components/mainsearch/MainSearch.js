@@ -2,10 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { DateRangePicker } from "react-date-range";
 import { format, addDays } from "date-fns";
 import "./MainSearch.css";
-import "react-date-range/dist/styles.css"; // 기본 스타일
-import "react-date-range/dist/theme/default.css"; // 기본 테마
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css"; 
 
-// 외부 클릭 감지를 위한 커스텀 훅
 function useOutsideClick(ref, closeFunction) {
     useEffect(() => {
         function handleClickOutside(event) {
@@ -22,13 +21,11 @@ function useOutsideClick(ref, closeFunction) {
 
 const MainSearch = () => {
     const [selectedLocation, setSelectedLocation] = useState("");
-    // 위치 모달
     const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
     const handleLocationClick = () => {
         setIsLocationModalOpen((prev) => !prev);
     };
 
-    // 주소 입력 필드 상태
     const [businessName, setBusinessName] = useState("");
     const [sido, setSido] = useState("");
     const [sigungu, setSigungu] = useState("");
@@ -51,7 +48,6 @@ const MainSearch = () => {
         "인천",
     ];
 
-    // 체크인/체크아웃 모달
     const [isDateModalOpen, setIsDateModalOpen] = useState(false);
     const toggleDateModal = () => {
         setIsDateModalOpen((prev) => !prev);
@@ -74,7 +70,6 @@ const MainSearch = () => {
         ? format(dateRange[0].endDate, "yyyy-MM-dd")
         : "날짜 추가";
 
-    // 여행자(게스트) 모달
     const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
     const toggleGuestModal = () => {
         setIsGuestModalOpen((prev) => !prev);
@@ -83,7 +78,6 @@ const MainSearch = () => {
         setIsGuestModalOpen(false);
     };
 
-    // 인원 상태
     const [adultCount, setAdultCount] = useState(1);
     const [childCount, setChildCount] = useState(0);
     const [infantCount, setInfantCount] = useState(0);
@@ -128,7 +122,6 @@ const MainSearch = () => {
     };
 
     const handleAddressConfirm = () => {
-        // 입력한 값들을 하나의 문자열로 조합
         const fullAddress = `${businessName} ${sido} ${sigungu} ${eupmyeondong} ${detail}`.trim();
         setSelectedLocation(fullAddress);
         setIsLocationModalOpen(false);
@@ -149,7 +142,6 @@ const MainSearch = () => {
             }`
             : "게스트 추가";
 
-    // 외부 클릭 감지를 위한 ref들
     const locationModalRef = useRef(null);
     const dateModalRef = useRef(null);
     const guestModalRef = useRef(null);
@@ -164,7 +156,6 @@ const MainSearch = () => {
         if (isGuestModalOpen) setIsGuestModalOpen(false);
     });
 
-    // 검색 버튼 클릭 시 실행될 함수
     const handleSearch = () => {
 
         const locationParams = {
@@ -209,7 +200,6 @@ const MainSearch = () => {
                             >
                                 <div className="modal-region-title">대한민국</div>
 
-                                {/* 지역 버튼 목록 */}
                                 <div className="modal-region-options">
                                     {regionList.map((region) => (
                                         <button
@@ -223,7 +213,6 @@ const MainSearch = () => {
 
                                 <br></br>
 
-                                {/* 직접 주소 입력 */}
                                 <div className="modal-region-title">유연한 검색</div>
                                 <div className="location-inputs">
                                     <input
@@ -266,13 +255,11 @@ const MainSearch = () => {
                         )}
                     </div>
 
-                    {/* 체크인 */}
                     <div className="search-item" onClick={toggleDateModal}>
                         <div className="search-title">체크인</div>
                         <div className="search-subtitle">{checkinText}</div>
                     </div>
 
-                    {/* 체크아웃 */}
                     <div className="search-item" onClick={toggleDateModal}>
                         <div className="search-title">체크아웃</div>
                         <div className="search-subtitle">{checkoutText}</div>
@@ -294,13 +281,11 @@ const MainSearch = () => {
                         </div>
                     )}
 
-                    {/* 여행자 */}
                     <div className="search-item" onClick={toggleGuestModal}>
                         <div className="search-title">여행자</div>
                         <div className="search-subtitle">{guestSubtitle}</div>
                         {isGuestModalOpen && (
                             <div ref={guestModalRef} className="guest-modal">
-                                {/* 성인 */}
                                 <div className="guest-item">
                                     <div className="guest-label">
                                         성인
@@ -327,7 +312,6 @@ const MainSearch = () => {
                                     </div>
                                 </div>
 
-                                {/* 어린이 */}
                                 <div className="guest-item">
                                     <div className="guest-label">
                                         어린이
@@ -354,7 +338,6 @@ const MainSearch = () => {
                                     </div>
                                 </div>
 
-                                {/* 유아 */}
                                 <div className="guest-item">
                                     <div className="guest-label">
                                         유아
@@ -384,7 +367,6 @@ const MainSearch = () => {
                         )}
                     </div>
 
-                    {/* 검색 버튼 */}
                     <button className="search-button" onClick={handleSearch}>
                         <svg fill="none" viewBox="0 0 24 24">
                             <path

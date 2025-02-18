@@ -12,11 +12,15 @@
     display: flex;
     position: relative;
   }
+
+  .header img{
+    margin-top: -3px;
+  }
   
   .header-title {
     position: absolute;
     right: 5%;
-    top: 20%;
+    top: 10%;
     display: flex;
     align-items: center;
     gap: 10px;
