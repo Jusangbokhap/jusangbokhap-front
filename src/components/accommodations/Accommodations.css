@@ -44,6 +44,10 @@
     padding: 10px;
 }
 
+.accommodation-info p{
+    margin-top: -5px;
+}
+
 .accommodation-info h3 {
     font-size: 16px;
     margin-bottom: 5px;
