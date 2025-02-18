@@ -1,0 +1,19 @@
+.reservation-card {
+    position: sticky;
+    top: 80px;
+    border: 1px solid #dddddd;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.reserve-button {
+    width: 100%;
+    padding: 14px;
+    background: #FF385C;  /* 에어비앤비 스타일 컬러 */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-top: 16px;
+}
