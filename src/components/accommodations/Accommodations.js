@@ -63,7 +63,7 @@ const Accommodations = () => {
                                     <p>{item.location}</p>
                                     <p>{item.date}</p>
                                     <p>{item.address}</p>
-                                    <p className="accommodation-price">₩{item.totalPrice} / 박</p>
+                                    <p className="accommodation-price">₩{item.totalPrice.toLocaleString()} / 박</p>
                                 </div>
                             </div>
                         </Link>
