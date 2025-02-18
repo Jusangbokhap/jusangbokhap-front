@@ -1,0 +1,66 @@
+/* 필터 바 컨테이너 (중앙 정렬) */
+.filter-bar {
+    display: flex;
+    justify-content: center; /* 중앙 정렬 */
+    align-items: center;
+    gap: 20px;
+    overflow-x: auto; /* 가로 스크롤 가능 */
+    white-space: nowrap;
+    padding: 15px 20px;
+    background: white;
+    border-bottom: 1px solid #ddd;
+    margin-top: -100px;
+}
+
+/* 개별 필터 버튼 */
+.filter-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    min-width: 80px;
+}
+
+.filter-button:hover,
+.filter-button.active {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* 필터 아이콘 */
+.filter-button img {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 5px;
+}
+
+/* 필터 텍스트 */
+.filter-button span {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* 필터 바 스크롤 조정 */
+.filter-bar::-webkit-scrollbar {
+    display: none; /* 스크롤바 숨기기 */
+}
+
+/* 필터 버튼 (우측 고정 필터) */
+.filter-fixed {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: auto; /* 필터 버튼을 오른쪽에 정렬 */
+}
+
+.filter-fixed:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}

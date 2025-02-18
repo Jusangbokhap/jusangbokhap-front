@@ -1,19 +1,32 @@
+@keyframes moveBackground {
+    0% {
+        background-position: center top;
+    }
+    100% {
+        background-position: center bottom;
+    }
+}
+
 .hero {
-  position: relative;
-  z-index: 99;
-  height: 100vh;
-  background-image: url("/public/images/back.png");
-  background-position: center;
-  background-repeat: no-repeat;
+    position: relative;
+    z-index: 99;
+    height: 100vh;
+    background-image: url("/public/images/back.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    /* 애니메이션 적용 */
+    animation: moveBackground 20s infinite alternate ease-in-out;
 }
 
 .hero .hero_title {
-  position: absolute;
-  bottom: 10%;
-  left: 5%;
-  font-size: 35px;
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.205);
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+    font-size: 35px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.205);
 }
 
 .view-toggle-container {
