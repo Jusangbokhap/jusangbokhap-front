@@ -105,20 +105,22 @@ const MapView = () => {
     const AWS_ENDPOINT =
       "http://a32bb41c5ec06485180bf647c7ad01bc-1856292906.ap-northeast-2.elb.amazonaws.com/api/accommodations/search/coordinate";
 
-    fetch(AWS_ENDPOINT, {
-      method: "POST",
+    const params = new URLSearchParams({
+      latitude: center.getLat(),
+      longitude: center.getLng(),
+      radius: radius,
+    });
+
+    // GET 요청에서 쿼리 파라미터 사용
+    fetch(`${AWS_ENDPOINT}?${params.toString()}`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        latitude: center.getLat(),
-        longitude: center.getLng(),
-        radius: radius,
-      }),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("🏡 숙소 검색 결과:", data);
+        console.log("숙소 검색 결과:", data);
         setAccommodations(data);
         displayMarkers(mapInstance, data);
       })
