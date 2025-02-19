@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { DateRangePicker } from "react-date-range";
-import { format, addDays } from "date-fns";
+import { format, parseISO, addDays } from "date-fns";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./MainSearch.css";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css"; 
@@ -20,6 +21,9 @@ function useOutsideClick(ref, closeFunction) {
 }
 
 const MainSearch = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const [selectedLocation, setSelectedLocation] = useState("");
     const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
     const handleLocationClick = () => {
@@ -33,8 +37,39 @@ const MainSearch = () => {
     const [detail, setDetail] = useState("");
 
 
+    const queryParams = new URLSearchParams(location.search);
+    const checkinParam = queryParams.get("checkin");
+    const checkoutParam = queryParams.get("checkout");
+    const sidoParam = queryParams.get("sido");
+    const guestParam = queryParams.get("guests");
+
+    const initialGuests = guestParam ? parseInt(guestParam, 10) : 1;
+    const initialCheckin = checkinParam ? parseISO(checkinParam) : new Date();
+    const initialCheckout = checkoutParam ? parseISO(checkoutParam) : addDays(new Date(), 1);
+
+
+    useEffect(() => {
+        // ✅ URL에서 가져온 guests 값을 adultCount에 반영
+        if (guestParam) {
+            setAdultCount(parseInt(guestParam, 10));
+        }
+    }, [guestParam]);
+
+    useEffect(() => {
+        if (checkinParam && checkoutParam) {
+            setDateRange([
+                {
+                    startDate: parseISO(checkinParam), 
+                    endDate: parseISO(checkoutParam),
+                    key: "selection",
+                },
+            ]);
+        }
+    }, [checkinParam, checkoutParam]); 
+    
+
     const regionList = [
-        "서울",
+        "서울특별시",
         "부산",
         "제주도",
         "속초",
@@ -157,32 +192,28 @@ const MainSearch = () => {
     });
 
     const handleSearch = () => {
-
-        const locationParams = {
-            businessName,
-            sido,
-            sigungu,
-            eupmyeondong,
-            detail,
-          };
-
-        const location = selectedLocation;
-        const checkin = dateRange[0].startDate
-            ? format(dateRange[0].startDate, "yyyy-MM-dd")
-            : "";
-        const checkout = dateRange[0].endDate
-            ? format(dateRange[0].endDate, "yyyy-MM-dd")
-            : "";
-            const guests = adultCount + childCount + infantCount;
-
-        console.log("검색 파라미터:", {
-            locationParams,
-            checkin,
-            checkout,
-            guests,
-          });
+        const params = {
+            businessName: businessName,
+            sido: sido,
+            sigungu: sigungu,
+            eupmyeondong: eupmyeondong,
+            detail: detail,
+            checkin: dateRange[0].startDate ? format(dateRange[0].startDate, "yyyy-MM-dd") : "",
+            checkout: dateRange[0].endDate ? format(dateRange[0].endDate, "yyyy-MM-dd") : "",
+            guests: totalGuests,
+            type: "HOTEL",
+        };
+    
+        const queryParams = new URLSearchParams();
+        Object.entries(params).forEach(([key, value]) => {
+            if (value !== "" && value !== null && value !== undefined) {
+                queryParams.append(key, value);
+            }
+        });
+    
+        navigate(`/accommodations?${queryParams.toString()}`);
     };
-
+    
     return (
         <div id="main-search">
             <div className="container">
@@ -190,7 +221,8 @@ const MainSearch = () => {
                     <div className="search-item" onClick={handleLocationClick}>
                         <div className="search-title">위치</div>
                         <div className="search-subtitle">
-                            {selectedLocation || "어디로 여행가시나요?"}
+                        {selectedLocation ? selectedLocation : (sidoParam ? sidoParam : "어디로 여행가시나요?")}
+
                         </div>
                         {isLocationModalOpen && (
                             <div
@@ -284,6 +316,7 @@ const MainSearch = () => {
                     <div className="search-item" onClick={toggleGuestModal}>
                         <div className="search-title">여행자</div>
                         <div className="search-subtitle">{guestSubtitle}</div>
+
                         {isGuestModalOpen && (
                             <div ref={guestModalRef} className="guest-modal">
                                 <div className="guest-item">
