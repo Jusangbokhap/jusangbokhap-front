@@ -48,6 +48,7 @@ const KakaoMap = ({ latitude, longitude }) => {
                 method: "GET",
                 headers: {
                     Authorization: `KakaoAK ${REST_API_KEY}`,
+                    "KA": "sdk/1.0.0 os/javascript lang/ko-KR device/web",
                 },
             });
 

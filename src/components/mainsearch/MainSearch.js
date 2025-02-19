@@ -37,26 +37,35 @@ const MainSearch = () => {
     const [detail, setDetail] = useState("");
 
 
-    // ✅ URL에서 기존 검색 파라미터 가져오기
     const queryParams = new URLSearchParams(location.search);
     const checkinParam = queryParams.get("checkin");
     const checkoutParam = queryParams.get("checkout");
+    const sidoParam = queryParams.get("sido");
+    const guestParam = queryParams.get("guests");
 
-    // ✅ checkin, checkout 값이 있으면 해당 날짜를 기본값으로 설정
+    const initialGuests = guestParam ? parseInt(guestParam, 10) : 1;
     const initialCheckin = checkinParam ? parseISO(checkinParam) : new Date();
     const initialCheckout = checkoutParam ? parseISO(checkoutParam) : addDays(new Date(), 1);
+
+
+    useEffect(() => {
+        // ✅ URL에서 가져온 guests 값을 adultCount에 반영
+        if (guestParam) {
+            setAdultCount(parseInt(guestParam, 10));
+        }
+    }, [guestParam]);
 
     useEffect(() => {
         if (checkinParam && checkoutParam) {
             setDateRange([
                 {
-                    startDate: parseISO(checkinParam),  // URL에서 가져온 checkin 날짜
-                    endDate: parseISO(checkoutParam),  // URL에서 가져온 checkout 날짜
+                    startDate: parseISO(checkinParam), 
+                    endDate: parseISO(checkoutParam),
                     key: "selection",
                 },
             ]);
         }
-    }, [checkinParam, checkoutParam]);  // ✅ URL 변경될 때만 실행
+    }, [checkinParam, checkoutParam]); 
     
 
     const regionList = [
@@ -195,7 +204,6 @@ const MainSearch = () => {
             type: "HOTEL",
         };
     
-        // ✅ 값이 있는 항목만 `URLSearchParams`에 추가
         const queryParams = new URLSearchParams();
         Object.entries(params).forEach(([key, value]) => {
             if (value !== "" && value !== null && value !== undefined) {
@@ -213,7 +221,8 @@ const MainSearch = () => {
                     <div className="search-item" onClick={handleLocationClick}>
                         <div className="search-title">위치</div>
                         <div className="search-subtitle">
-                            {selectedLocation || "어디로 여행가시나요?"}
+                        {selectedLocation ? selectedLocation : (sidoParam ? sidoParam : "어디로 여행가시나요?")}
+
                         </div>
                         {isLocationModalOpen && (
                             <div
@@ -307,6 +316,7 @@ const MainSearch = () => {
                     <div className="search-item" onClick={toggleGuestModal}>
                         <div className="search-title">여행자</div>
                         <div className="search-subtitle">{guestSubtitle}</div>
+
                         {isGuestModalOpen && (
                             <div ref={guestModalRef} className="guest-modal">
                                 <div className="guest-item">
