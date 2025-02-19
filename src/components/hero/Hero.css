@@ -15,7 +15,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    
+
     /* 애니메이션 적용 */
     animation: moveBackground 20s infinite alternate ease-in-out;
 }
@@ -29,4 +29,32 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.205);
 }
 
+.view-toggle-container {
+  position: fixed;
+  z-index: 999;
+  bottom: 20px;
+  right: 20px;
+}
 
+.view-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 19px;
+  border-radius: 24px;
+  border: 1px solid var(--linaria-theme_palette-shadow100);
+  background: rgb(34, 34, 34);
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  touch-action: manipulation;
+  transition: transform 0.25s ease-in-out, background-color 0.25s ease-in-out;
+  white-space: nowrap;
+  box-shadow: none;
+}
+
+.view-toggle-btn:hover {
+  transform: scale(1.05); /* 마우스 호버 시 약간 확대 */
+}
